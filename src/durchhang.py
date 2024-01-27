@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 def kettenleiter(h: float, w: float, x: float) -> float:
     """
     Funktion zur Berechnung der Postion y(x) eines geraden Kettenleiters
-    h: Horizontale Kraft in N/mm2
+    h: Horizontale Seilkraft in N
     w: Leitergewicht pro Längeneinheit in N/m
     x: Postion x für die y bestimmt werden soll in m
     Erläuterung zu h: Gemäss Cigre 324 WG B2-12 Kapitel 4.1 kann die horizontale Kraft im unbelasteten Zustand
@@ -19,10 +19,16 @@ def kettenleiter(h: float, w: float, x: float) -> float:
     return y
 
 
+def temperatureinfluss(w: float, t: float) -> float:
+    reference_temperatur: float = 10
+    alpha: float = 23E-6                                # für Aluminium
+    delta_s = alpha * (reference_temperatur - t) * w
+
+
 def kettenleiter_gerade_gesamt(h: float, w: float, s: float) -> tuple[ndarray[Any, dtype[Any]], list[float]]:
     """
     Funktion zur Berechnung des gesamten geraden Kettenleiters
-    h: Horizontale Kraft in N/mm2
+    h: Horizontale Seilkraft in N
     w: Leitergewicht pro Längeneinheit in N/m
     s: Spannweite in m
     Erläuterung zu h: Gemäss Cigre 324 WG B2-12 Kapitel 4.1 kann die horizontale Kraft im unbelasteten Zustand
@@ -41,7 +47,7 @@ def kettenleiter_schraeg_gesamt(h: float, w: float, s: float, h_diff: float, art
         -> tuple[ndarray[Any, dtype[Any]], list[float]]:
     """
     Funktion zur Berechnung des gesamten schrägen Kettenleiters
-    h: Horizontale Kraft in N/mm2
+    h: Horizontale Seilkraft in N
     w: Leitergewicht pro Längeneinheit in N/m
     s: Spannweite in m
     Erläuterung zu h: Gemäss Cigre 324 WG B2-12 Kapitel 4.1 kann die horizontale Kraft im unbelasteten Zustand
@@ -70,7 +76,7 @@ def kettenleiter_schraeg_gesamt(h: float, w: float, s: float, h_diff: float, art
 def durchhang(h: float, w: float, s: float) -> float:
     """
     Funktion zur Berechnung des maximalen Durchhangs
-    h: Horizontale Kraft in N/mm2
+    h: Horizontale Seilkraft in N
     w: Leitergewicht pro Längeneinheit in N/m
     s: Spannweite in m
     Erläuterung zu h: Gemäss Cigre 324 WG B2-12 Kapitel 4.1 kann die horizontale Kraft im unbelasteten Zustand
@@ -84,7 +90,7 @@ def durchhang(h: float, w: float, s: float) -> float:
 def leiterlaenge(h: float, w: float, s: float) -> float:
     """
     Funktion zur Berechnung der Länge des Leiterseils
-    h: Horizontale Kraft in N/mm2
+    h: Horizontale Seilkraft in N
     w: Leitergewicht pro Längeneinheit in N/m
     s: Spannweite in m
     Erläuterung zu h: Gemäss Cigre 324 WG B2-12 Kapitel 4.1 kann die horizontale Kraft im unbelasteten Zustand
@@ -98,7 +104,7 @@ def leiterlaenge(h: float, w: float, s: float) -> float:
 def leiterlaenge_spannweite_differenz(h: float, w: float, s: float) -> float:
     """
         Funktion zur Berechnung der Differenz zwischen Länge des Leiterseils und der Spannweite
-        h: Horizontale Kraft in N/mm2
+        h: Horizontale Seilkraft in N
         w: Leitergewicht pro Längeneinheit in N/m
         s: Spannweite in m
         Erläuterung zu h: Gemäss Cigre 324 WG B2-12 Kapitel 4.1 kann die horizontale Kraft im unbelasteten Zustand
@@ -187,5 +193,10 @@ if __name__ == "__main__":
     kettenleiter_schraeg_gesamt(h=28000, w=15.97, s=300, h_diff=10, art="rechts hoch")
 
     # Test für Bonaduz:
-    # kettenleiter_gesamt(h=58982, w=27.743, s=100)
-    # durchhang(h=58982, w=27.743, s=100)
+    #kettenleiter_gerade_gesamt(h=11500, w=27.743, s=163)
+    #durchhang(h=11500, w=27.743, s=163)
+
+    # Test für Eglisau:
+    kettenleiter_gerade_gesamt(h=6500, w=11.059, s=22)
+    durchhang(h=6500, w=11.059, s=22)
+    #seilzugspannung_gesamt_exact(h=6500, w=11.059, s=22)
