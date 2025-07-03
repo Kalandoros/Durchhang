@@ -19,10 +19,18 @@ def kettenleiter(h: float, w: float, x: float) -> float:
     return y
 
 
-def temperatureinfluss(w: float, t: float) -> float:
-    reference_temperatur: float = 10
-    alpha: float = 23E-6                                # für Aluminium
-    delta_s = alpha * (reference_temperatur - t) * w
+def seillaengenaenderung_temperatureinfluss(s: float, t: float) -> float:
+    """
+    Funktion zur Bestimmung der Längenänderung aufgrund des Temperatureinflusses
+    s: Länge des Leiterseiles bei Referenztemperatur
+    t: Temperatur zu jener die Längenänderung bestimmt werden soll in °C
+    Cigre 324 WG B2-12 Kapitel 5.2.2
+    """
+    T_Ref: float = 10
+    alpha_A: float = 23E-6  # für Aluminium
+    delta_s = alpha_A * (t - T_Ref) * s
+    print("Längenänderung aufgrund des Temperatureinflusses in m:", delta_s)
+    return delta_s
 
 
 def kettenleiter_gerade_gesamt(h: float, w: float, s: float) -> tuple[ndarray[Any, dtype[Any]], list[float]]:
@@ -96,8 +104,8 @@ def leiterlaenge(h: float, w: float, s: float) -> float:
     Erläuterung zu h: Gemäss Cigre 324 WG B2-12 Kapitel 4.1 kann die horizontale Kraft im unbelasteten Zustand
     mit 20% der rechnerischen Bruchkraft bei 15°C angenommen werden.
     """
-    l = ((2 * h) / w) * (math.sinh((w * s) / (2 * h)))
-    print("Länge des Leiterseiles in m:", l)
+    l: float = ((2 * h) / w) * (math.sinh((w * s) / (2 * h)))
+    # print("Länge des Leiterseiles in m:", l)
     return l
 
 
@@ -171,32 +179,46 @@ def kettenleiter_plot(x, y):
 if __name__ == "__main__":
     # Beispielrechnung gemäss Cigre 324 WG B2-12 Calculation of Sag-tension for Overhead Power Lines - Seite 10 →
     # Verifiziert
-    kettenleiter_gerade_gesamt(h=28000, w=15.97, s=300)
+    # kettenleiter_gerade_gesamt(h=28000, w=15.97, s=300)
     # Beispielrechnung gemäss Cigre 324 WG B2-12 Calculation of Sag-tension for Overhead Power Lines - Seite 11 →
     # Verifiziert
-    durchhang(h=28000, w=15.97, s=300)
+    # durchhang(h=28000, w=15.97, s=300)
     # Beispielrechnung gemäss Cigre 324 WG B2-12 Calculation of Sag-tension for Overhead Power Lines - Seite 12 →
     # Verifiziert
-    leiterlaenge(h=28000, w=15.97, s=300)
+    # leiterlaenge(h=28000, w=15.97, s=300)
     # Beispielrechnung gemäss Cigre 324 WG B2-12 Calculation of Sag-tension for Overhead Power Lines - Seite 12 →
     # Verifiziert
-    leiterlaenge_spannweite_differenz(h=28000, w=15.97, s=300)
+    # leiterlaenge_spannweite_differenz(h=28000, w=15.97, s=300)
     # Beispielrechnung gemäss Cigre 324 WG B2-12 Calculation of Sag-tension for Overhead Power Lines - Seite 15 →
     # Verifiziert
-    seilzugspannung_gesamt_approx(h=28000, w=15.97, d=6.42)
+    # seilzugspannung_gesamt_approx(h=28000, w=15.97, d=6.42)
     # Beispielrechnung gemäss Cigre 324 WG B2-12 Calculation of Sag-tension for Overhead Power Lines - Seite 15 →
     # Verifiziert
-    seilzugspannung_gesamt_exact(h=28000, w=15.97, s=300)
+    # seilzugspannung_gesamt_exact(h=28000, w=15.97, s=300)
     # Beispielrechnung gemäss Cigre 324 WG B2-12 Calculation of Sag-tension for Overhead Power Lines - Seite 15 →
     # Verifiziert
-    kettenleiter_schraeg_gesamt(h=28000, w=15.97, s=300, h_diff=10, art="links hoch")
-    kettenleiter_schraeg_gesamt(h=28000, w=15.97, s=300, h_diff=10, art="rechts hoch")
+
+    # kettenleiter_schraeg_gesamt(h=28000, w=15.97, s=300, h_diff=10, art="links hoch")
+    # kettenleiter_schraeg_gesamt(h=28000, w=15.97, s=300, h_diff=10, art="rechts hoch")
 
     # Test für Bonaduz:
-    #kettenleiter_gerade_gesamt(h=11500, w=27.743, s=163)
-    #durchhang(h=11500, w=27.743, s=163)
+    # kettenleiter_gerade_gesamt(h=11500, w=27.743, s=163)
+    # durchhang(h=11500, w=27.743, s=163)
 
     # Test für Eglisau:
-    kettenleiter_gerade_gesamt(h=6500, w=11.059, s=22)
-    durchhang(h=6500, w=11.059, s=22)
-    #seilzugspannung_gesamt_exact(h=6500, w=11.059, s=22)
+    kettenleiter_gerade_gesamt(h=5000, w=11.059, s=15)
+    durchhang(h=500, w=11.059, s=15)
+    leiterlaenge(h=5000, w=11.059, s=15)
+    seillaengenaenderung_temperatureinfluss(s=22, t=-20)
+    # seilzugspannung_gesamt_exact(h=6500, w=11.059, s=22)
+    l_ges_temp = leiterlaenge(h=6500, w=11.059, s=22) + seillaengenaenderung_temperatureinfluss(s=22, t=80)
+    print("Leiterlänge nach Temperaturänderung in m:", l_ges_temp)
+"""
+    for count, h in enumerate(np.arange(1200.1, 7000.0, 0.0001)):
+        l_loop = leiterlaenge(h=h, w=11.059, s=22)
+        if l_ges_temp*1 < l_loop < l_ges_temp*1.0000000001:
+            print(f'Die horizontale Kraft bei einer Leiterlänge von {l_ges_temp} m beträgt {h} N.')
+            break
+        print(f' {l_loop} :: {l_ges_temp}')
+"""
+#0.9999999999
