@@ -1,0 +1,8 @@
+jupyterlab
+matplotlib
+numpy
+pandas
+scipy
+symengine
+sympy
+taipy-gui
