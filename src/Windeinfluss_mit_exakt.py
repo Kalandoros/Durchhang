@@ -1,8 +1,14 @@
-from taipy.gui import Gui
+from taipy.gui import Gui, State
 import taipy.gui.builder as tgb
 import math
+import types
 import pandas as pd
+import json
+from pathlib import Path
 from scipy.optimize import root_scalar
+
+# File to store current State for external access (e.g., Jupyter notebook)
+_STATE_FILE = Path(__file__).parent / "state.json"
 
 
 # --- LOGIK & BERECHNUNG ---
@@ -37,10 +43,12 @@ def berechne_eislast(A_mm2: float|int, d_eis_mm: float|int, rho_eis: float|int) 
 
 
 def berechne_windeinfluss(F_G: float|int, F_W: float|int) -> float|int:
+    """Resultierende Last aus Eigengewicht und Windlast nach Pythagoras."""
     return math.sqrt(F_G**2 + F_W**2)
 
 
 def berechne_ausschwingwinkel(F_G: float|int, F_W: float|int) -> float|int:
+    """Ausschwingwinkel des Leiters durch Wind in Grad."""
     if F_W <= 0:
         return 90.0
     return math.degrees(math.atan(F_G / F_W))
@@ -360,6 +368,21 @@ def on_change(state, var_name, var_value):
     p_dict = {'calc_method':state.calc_method, 'n_sub':n_sub_val, 'F_G':state.F_G, 'F_W':state.F_W, 'T_start':state.T_start, 'sigma_0':state.sigma_0, 'E_modul':state.E_modul, 'span_L':state.span_L,
         'A_cross':state.A_cross, 'rho_eis':state.rho_eis, 'd_eis':state.d_eis}
     state.summary_df = erstelle_uebersichtstabelle(p_dict)
+
+    # Write current State to JSON file for external access (e.g., Jupyter notebook)
+    # Only include JSON-serializable user variables (numbers, strings, booleans, lists, dicts)
+    _JSON_TYPES = (int, float, str, bool, type(None))
+    state_dict = {}
+    user_vars = object.__getattribute__(state, '_user_var_list')
+    for key in user_vars:
+        if key == '__name__':
+            continue
+        val = getattr(state, key, None)
+        if not isinstance(val, _JSON_TYPES):
+            continue  # Skip anything that is not a basic JSON type
+        state_dict[key] = val
+    with open(_STATE_FILE, 'w', encoding='utf-8') as f:
+        json.dump(state_dict, f, ensure_ascii=False, indent=2)
 
 
 # --- UI BUILDER ---
