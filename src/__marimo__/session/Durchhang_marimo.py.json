@@ -106,7 +106,14 @@
     {
       "id": "SFPL",
       "code_hash": "a6edbcfc566f4cd818dedb2fa03ea9b1",
-      "outputs": [],
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><marimo-tex class=\"arithmatex\">||[\\alpha = \\arctan\\left(\\frac{F_{G}}{F_{W}}\\right) = \\arctan\\left(\\frac{11.3}{24.544}\\right) = 24.72^\\circ||]</marimo-tex></span>"
+          }
+        }
+      ],
       "console": []
     },
     {
