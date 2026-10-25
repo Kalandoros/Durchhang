@@ -1,0 +1,139 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.25.2",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "93cd93ef8e50aa45cb94cbbd9ab248b6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "0dd28ab59a446c4cc40f8bf407de0249",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "a2ecf5de772eebaac06bfb89ab98d21d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"durchhang-berechnungsprotokoll\">Durchhang \u2014 Berechnungsprotokoll</h1>\n<span class=\"paragraph\">Starte zuerst die Taipy-App (<code>Windeinfluss_mit_exakt.py</code>), f\u00fchre im Browser eine Berechnung durch.\nDie Werte werden automatisch aus <code>state.json</code> gelesen.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "fc8b017740baf637073ce950038fce6d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "F_G = 11.3 N/m,  F_W = 24.544 N/m\nsigma_0 = 15.0 N/mm\u00b2,  L = 20.0 m\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "6ec9e734c9a86c1caa8c2fb0bbd26581",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"1-windeinfluss\">1. Windeinfluss</h2>\n<span class=\"paragraph\">Die resultierende Last <marimo-tex class=\"arithmatex\">||(F_{ges}||)</marimo-tex> aus Eigengewicht und Windlast nach Pythagoras.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "8e004ecddd94a5d03d64ce54176a511e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><marimo-tex class=\"arithmatex\">||[F_{ges} = \\sqrt{F_{G}^2 + F_{W}^2} = \\sqrt{11.3^2 + 24.544^2} = 27.020 \\; \\text{N/m}||]</marimo-tex></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "dd914738b8a3a3f6f0b7e63e8a312369",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"2-ausschwingwinkel\">2. Ausschwingwinkel</h2>\n<span class=\"paragraph\">Der Winkel <marimo-tex class=\"arithmatex\">||(\\alpha||)</marimo-tex>, um den der Leiter durch den Wind ausgeschlagen wird.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "a6edbcfc566f4cd818dedb2fa03ea9b1",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "e5def3424265e0e3243dca3fde584283",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"werte-aktualisieren\">Werte aktualisieren</h2>\n<span class=\"paragraph\">Wenn du Werte in der Taipy-GUI (im Browser) \u00e4nderst, klicke den Button unten,\num die neuen Werte aus <code>state.json</code> zu lesen. Alle Formeln werden automatisch neu berechnet.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "f7faa002ef1ee95df8a1f3eb1fe15cef",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}
